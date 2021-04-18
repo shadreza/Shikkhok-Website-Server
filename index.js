@@ -8,21 +8,18 @@ const bodyParser = require('body-parser');
 require('dotenv').config();
 app.use(cors());
 app.use(bodyParser.json());
-const uri = "mongodb+srv://shikkhok-database-user-01:$QJxXDF8OT9VtFXQQ@hay-store-cluster-01.coi91.mongodb.net/shikkhok-user-db?retryWrites=true&w=majority";
-const userDatabaseURI = `mongodb+srv://${process.env.databaseUser}:${process.env.databasePassword}@hay-store-cluster-01.coi91.mongodb.net/${process.env.userDatabase}?retryWrites=true&w=majority`
-const userClient = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-const userCollection = userClient.db(`${process.env.userDatabase}`).collection("user");
-userClient.connect(err => {
-  const userCollection = userClient.db(`${process.env.userDatabase}`).collection("user");
-  
-})
 
-app.get('/users', (req, res) => {
-  userCollection.find()
-    .toArray()
-    .then(items =>{
-      res.send(items);
-    })
+const userDatabaseURI = `mongodb+srv://${process.env.databaseUser}:${process.env.databasePassword}@hay-store-cluster-01.coi91.mongodb.net/${process.env.userDatabase}?retryWrites=true&w=majority`
+const userClient = new MongoClient(userDatabaseURI, { useNewUrlParser: true, useUnifiedTopology: true });
+userClient.connect(() => {
+  const userCollection = userClient.db(`${process.env.userDatabase}`).collection("user");
+  app.get('/users', (req, res) => {
+    userCollection.find()
+      .toArray()
+      .then(items =>{
+        res.send(items);
+      })
+  })
 })
 
 app.get('/', (req, res) => {
