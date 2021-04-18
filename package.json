@@ -4,8 +4,8 @@
   "description": "server side code for shikkhok website",
   "main": "index.js",
   "scripts": {
-    "start:dev" : "nodemon index",
-    "start" : "node index",
+    "start:dev": "nodemon index",
+    "start": "node index",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "shad reza",
