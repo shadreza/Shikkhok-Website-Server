@@ -7,8 +7,8 @@ const bodyParser = require('body-parser');
 require('dotenv').config();
 
 // const url = 'mongodb+srv://shikkhok-database-user-01:QJxXDF8OT9VtFXQQ@hay-store-cluster-01.coi91.mongodb.net/shikkhok-user-db?retryWrites=true&w=majority'
-// const userDatabaseURI = `mongodb+srv://${process.env.databaseUser}:${process.env.databasePassword}@hay-store-cluster-01.coi91.mongodb.net/${process.env.userDatabase}?retryWrites=true&w=majority`
-const userClient = new MongoClient('mongodb+srv://shikkhok-database-user-01:QJxXDF8OT9VtFXQQ@hay-store-cluster-01.coi91.mongodb.net/shikkhok-user-db?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+const userDatabaseURI = `mongodb+srv://${process.env.databaseUser}:${process.env.databasePassword}@hay-store-cluster-01.coi91.mongodb.net/${process.env.userDatabase}?retryWrites=true&w=majority`
+const userClient = new MongoClient(userDatabaseURI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const app = express()
 app.use(cors());
