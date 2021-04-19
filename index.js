@@ -10,6 +10,20 @@ const app = express()
 app.use(cors());
 app.use(bodyParser.json());
 
+const addData = (url,collection) => {
+  app.post(`/${url}` ,(req, res) => {
+    const addData = req.body;
+    collection.insertOne(addData)
+    .then(result=>{
+      console.log("successfully inseterd for ",result.insertedCount);
+      res.send(result.insertedCount>0)
+    })
+    .catch(e=>{
+      console.log("data could not be inserted for \n",e);
+    })
+  })
+}
+
 
 const userDatabaseURI = `mongodb+srv://${process.env.databaseUser}:${process.env.databasePassword}@hay-store-cluster-01.coi91.mongodb.net/${process.env.userDatabase}?retryWrites=true&w=majority`
 const userClient = new MongoClient(userDatabaseURI, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -41,18 +55,19 @@ adminClient.connect((err) => {
         res.send(items);
       })
   })
-  app.post('/addAdmins' ,(req, res) => {
-    const addData = req.body;
-    console.log("adding new data on" , addData);
-    adminCollection.insertOne(addData)
-    .then(result=>{
-      console.log("successfully inseterd for ",result.insertedCount);
-      res.send(result.insertedCount>0)
-    })
-    .catch(e=>{
-      console.log("data could not be inserted for \n",e);
-    })
-  })
+  // app.post('/addAdmins' ,(req, res) => {
+  //   const addData = req.body;
+  //   console.log("adding new data on" , addData);
+  //   adminCollection.insertOne(addData)
+  //   .then(result=>{
+  //     console.log("successfully inseterd for ",result.insertedCount);
+  //     res.send(result.insertedCount>0)
+  //   })
+  //   .catch(e=>{
+  //     console.log("data could not be inserted for \n",e);
+  //   })
+  // })
+  addData('addAdmins' , adminCollection);
   
 })
 
