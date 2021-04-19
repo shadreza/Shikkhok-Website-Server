@@ -10,20 +10,6 @@ const app = express()
 app.use(cors());
 app.use(bodyParser.json());
 
-const addToDatabase = (urlPart , collection) => {
-  app.post(urlPart ,(req, res) => {
-    const addData = req.body;
-    console.log("adding new data on"+urlPart+"\n" , addData);
-    collection.insertOne(addData)
-    .then(result=>{
-      console.log("successfully inseterd for "+urlPart+"\n",result.insertedCount);
-      res.send(result.insertedCount>0)
-    })
-    .catch(e=>{
-      console.log("data could not be inserted for "+urlPart+"\n",e);
-    })
-  }
-)}
 
 const userDatabaseURI = `mongodb+srv://${process.env.databaseUser}:${process.env.databasePassword}@hay-store-cluster-01.coi91.mongodb.net/${process.env.userDatabase}?retryWrites=true&w=majority`
 const userClient = new MongoClient(userDatabaseURI, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -38,7 +24,7 @@ userClient.connect((err) => {
         res.send(items);
       })
   })
-  addToDatabase('users',userCollection);
+  
 })
 
 
@@ -55,7 +41,19 @@ adminClient.connect((err) => {
         res.send(items);
       })
   })
-  addToDatabase('addAdmins',adminCollection);
+  app.post('addAdmins' ,(req, res) => {
+    const addData = req.body;
+    console.log("adding new data on" , addData);
+    adminCollection.insertOne(addData)
+    .then(result=>{
+      console.log("successfully inseterd for ",result.insertedCount);
+      res.send(result.insertedCount>0)
+    })
+    .catch(e=>{
+      console.log("data could not be inserted for \n",e);
+    })
+  }
+  
 })
 
 
@@ -72,7 +70,7 @@ teachersClient.connect((err) => {
         res.send(items);
       })
   })
-  addToDatabase('teachers',teachersCollection);
+  
 })
 
 
@@ -89,7 +87,7 @@ userFeedbackClient.connect((err) => {
         res.send(items);
       })
   })
-  addToDatabase('feedbacks',userFeedbackCollection);
+  
 })
 
 
@@ -107,7 +105,7 @@ courseClient.connect((err) => {
         res.send(items);
       })
   })
-  addToDatabase('courses',courseCollection);
+  
 })
 
 
@@ -125,7 +123,7 @@ reviewsClient.connect((err) => {
         res.send(items);
       })
   })
-  addToDatabase('reviews',reviewsCollection);
+  
 })
 
 
@@ -145,7 +143,7 @@ serviceClient.connect((err) => {
         res.send(items);
       })
   })
-  addToDatabase('services',serviceCollection);
+  
 })
 
 
@@ -166,7 +164,6 @@ userOrdersListClient.connect((err) => {
         res.send(items);
       })
   })
-  addToDatabase('orders-list',userOrdersListCollection);
 })
 
 
