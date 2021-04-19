@@ -11,7 +11,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const addToDatabase = (urlPart , collection) => {
-  app.post(`https://fierce-cove-21299.herokuapp.com/${urlPart}` ,(req, res) => {
+  app.post(urlPart ,(req, res) => {
     const addData = req.body;
     console.log("adding new data on"+urlPart+"\n" , addData);
     collection.insertOne(addData)
