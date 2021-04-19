@@ -38,6 +38,7 @@ userClient.connect((err) => {
         res.send(items);
       })
   })
+  addData('addUsers' , userCollection);
   
 })
 
@@ -55,18 +56,6 @@ adminClient.connect((err) => {
         res.send(items);
       })
   })
-  // app.post('/addAdmins' ,(req, res) => {
-  //   const addData = req.body;
-  //   console.log("adding new data on" , addData);
-  //   adminCollection.insertOne(addData)
-  //   .then(result=>{
-  //     console.log("successfully inseterd for ",result.insertedCount);
-  //     res.send(result.insertedCount>0)
-  //   })
-  //   .catch(e=>{
-  //     console.log("data could not be inserted for \n",e);
-  //   })
-  // })
   addData('addAdmins' , adminCollection);
   
 })
@@ -86,6 +75,7 @@ teachersClient.connect((err) => {
       })
   })
   
+  addData('addTeachers' , teachersCollection);
 })
 
 
@@ -103,6 +93,7 @@ userFeedbackClient.connect((err) => {
       })
   })
   
+  addData('addUserFeedback' , userFeedbackCollection);
 })
 
 
@@ -121,6 +112,7 @@ courseClient.connect((err) => {
       })
   })
   
+  addData('addCourse' , courseCollection);
 })
 
 
@@ -139,6 +131,7 @@ reviewsClient.connect((err) => {
       })
   })
   
+  addData('addReview' , reviewsCollection);
 })
 
 
@@ -159,6 +152,7 @@ serviceClient.connect((err) => {
       })
   })
   
+  addData('addServices' , serviceCollection);
 })
 
 
@@ -179,6 +173,7 @@ userOrdersListClient.connect((err) => {
         res.send(items);
       })
   })
+  addData('addOrders-list' , userOrdersListCollection);
 })
 
 
