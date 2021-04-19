@@ -52,7 +52,7 @@ adminClient.connect((err) => {
     .catch(e=>{
       console.log("data could not be inserted for \n",e);
     })
-  }
+  })
   
 })
 
