@@ -55,7 +55,7 @@ adminClient.connect((err) => {
         res.send(items);
       })
   })
-  addToDatabase('admins',adminCollection);
+  addToDatabase('addAdmins',adminCollection);
 })
 
 
