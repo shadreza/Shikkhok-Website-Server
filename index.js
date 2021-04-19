@@ -41,7 +41,7 @@ adminClient.connect((err) => {
         res.send(items);
       })
   })
-  app.post('addAdmins' ,(req, res) => {
+  app.post('/addAdmins' ,(req, res) => {
     const addData = req.body;
     console.log("adding new data on" , addData);
     adminCollection.insertOne(addData)
