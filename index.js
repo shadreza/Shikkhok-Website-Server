@@ -10,6 +10,20 @@ const app = express()
 app.use(cors());
 app.use(bodyParser.json());
 
+const addToDatabase = (urlPart , collection) => {
+  app.post(`/${urlPart}` ,(req, res) => {
+    const addData = req.body;
+    console.log("adding new data on"+urlPart+"\n" , addData);
+    collection.insertOne(addData)
+    .then(result=>{
+      console.log("successfully inseterd for "+urlPart+"\n",result.insertedCount);
+      res.send(result.insertedCount>0)
+    })
+    .catch(e=>{
+      console.log("data could not be inserted for "+urlPart+"\n",e);
+    })
+  }
+)}
 
 const userDatabaseURI = `mongodb+srv://${process.env.databaseUser}:${process.env.databasePassword}@hay-store-cluster-01.coi91.mongodb.net/${process.env.userDatabase}?retryWrites=true&w=majority`
 const userClient = new MongoClient(userDatabaseURI, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -24,6 +38,7 @@ userClient.connect((err) => {
         res.send(items);
       })
   })
+  addToDatabase('users',userCollection);
 })
 
 
@@ -40,6 +55,7 @@ adminClient.connect((err) => {
         res.send(items);
       })
   })
+  addToDatabase('admins',adminCollection);
 })
 
 
@@ -56,6 +72,7 @@ teachersClient.connect((err) => {
         res.send(items);
       })
   })
+  addToDatabase('teachers',teachersCollection);
 })
 
 
@@ -72,6 +89,7 @@ userFeedbackClient.connect((err) => {
         res.send(items);
       })
   })
+  addToDatabase('feedbacks',userFeedbackCollection);
 })
 
 
@@ -89,6 +107,7 @@ courseClient.connect((err) => {
         res.send(items);
       })
   })
+  addToDatabase('courses',courseCollection);
 })
 
 
@@ -98,14 +117,15 @@ const reviewsClient = new MongoClient(reviewsDtabaseURI, { useNewUrlParser: true
 
 reviewsClient.connect((err) => {
   console.log('err khaise mongo hayre' , err);
-  const userCollection = reviewsClient.db(process.env.reviewsDtabase).collection("reviews");
+  const reviewsCollection = reviewsClient.db(process.env.reviewsDtabase).collection("reviews");
   app.get('/reviews', (req, res) => {
-    userCollection.find()
+    reviewsCollection.find()
       .toArray()
       .then(items =>{
         res.send(items);
       })
   })
+  addToDatabase('reviews',reviewsCollection);
 })
 
 
@@ -117,14 +137,15 @@ const serviceClient = new MongoClient(serviceDatabaseURI, { useNewUrlParser: tru
 
 serviceClient.connect((err) => {
   console.log('err khaise mongo hayre' , err);
-  const userCollection = serviceClient.db(process.env.serviceDatabase).collection("services");
+  const serviceCollection = serviceClient.db(process.env.serviceDatabase).collection("services");
   app.get('/services', (req, res) => {
-    userCollection.find()
+    serviceCollection.find()
       .toArray()
       .then(items =>{
         res.send(items);
       })
   })
+  addToDatabase('services',serviceCollection);
 })
 
 
@@ -137,14 +158,15 @@ const userOrdersListClient = new MongoClient(userOrdersListDatabaseURI, { useNew
 
 userOrdersListClient.connect((err) => {
   console.log('err khaise mongo hayre' , err);
-  const userCollection = userOrdersListClient.db(process.env.userOrdersListDatabase).collection("orders-list");
+  const userOrdersListCollection = userOrdersListClient.db(process.env.userOrdersListDatabase).collection("orders-list");
   app.get('/orders-list', (req, res) => {
-    userCollection.find()
+    userOrdersListCollection.find()
       .toArray()
       .then(items =>{
         res.send(items);
       })
   })
+  addToDatabase('orders-list',userOrdersListCollection);
 })
 
 
