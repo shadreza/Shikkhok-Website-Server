@@ -6,6 +6,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 require('dotenv').config();
 
+
 const app = express()
 app.use(cors());
 app.use(bodyParser.json());
@@ -39,7 +40,6 @@ userClient.connect((err) => {
       })
   })
   addData('addUsers' , userCollection);
-  
 })
 
 
@@ -57,6 +57,15 @@ adminClient.connect((err) => {
       })
   })
   addData('addAdmins' , adminCollection);
+  app.delete('/deleteAdmin/:id' , (req,res) =>{
+    adminCollection.deleteOne({_id: ObjectID(req.params.id)})
+    .then(result=>{
+      console.log('removed successully');
+    })
+    .catch(e=>[
+      console.log('could not be removed')
+    ])
+  })
   
 })
 
