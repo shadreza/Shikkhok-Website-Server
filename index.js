@@ -122,6 +122,17 @@ courseClient.connect((err) => {
   })
   
   addData('addCourse' , courseCollection);
+  
+  app.delete('/deleteCourse/:id' , (req,res) =>{
+    courseCollection.deleteOne({_id: ObjectID(req.params.id)})
+    .then(result=>{
+      console.log('removed successully');
+    })
+    .catch(e=>[
+      console.log('could not be removed')
+    ])
+  })
+
 })
 
 
@@ -162,6 +173,16 @@ serviceClient.connect((err) => {
   })
   
   addData('addServices' , serviceCollection);
+  app.delete('/deleteCService/:id' , (req,res) =>{
+    serviceCollection.deleteOne({_id: ObjectID(req.params.id)})
+    .then(result=>{
+      console.log('removed successully');
+    })
+    .catch(e=>[
+      console.log('could not be removed')
+    ])
+  })
+
 })
 
 
